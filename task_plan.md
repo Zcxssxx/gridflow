@@ -1,24 +1,23 @@
-# GridFlow task plan
+# GridFlow delivery plan
 
-- [x] Screen the power-flow topic for MoonBit overlap and record adjacent projects.
-- [x] Document benchmark-source caveats and avoid redistributing unclear case data.
-- [x] Create isolated MoonBit module and local Git repository.
-- [x] Define the public network model, validation errors, and solver options.
-- [x] Implement topology/numeric validation and tests.
-- [x] Implement Ybus, polar Newton-Raphson, pivoted dense solve, branch flows, and PV Q-limit conversion.
-- [x] Cross-check the analytic Jacobian against finite differences.
-- [x] Implement a safe numeric MATPOWER subset parser and native CLI.
-- [x] Add a self-authored two-bus example, API/CLI docs, provenance, and Apache-2.0 license.
-- [x] Add native multi-OS and WebAssembly GitHub Actions checks.
-- [x] Verify the package contents with moon package --list.
-- [x] Validate native and wasm-gc on the latest locally installed stable MoonBit toolchain.
-- [ ] Make truthful, attributable local commits; do not mechanically split work to inflate the count.
-- [ ] Recheck the current hackathon rules and prepare any required application material for GridFlow.
-- [ ] Create/push Zcxssxx/gridflow and independently verify remote files, branch, commit history, contributors, and CI.
+- [x] Screen the balanced AC power-flow topic against MoonBit packages and adjacent repositories; record the scope and overlap caveats.
+- [x] Define the public network model, solver options, typed errors, and input validation.
+- [x] Implement Ybus construction, polar Newton-Raphson, an analytic Jacobian, pivoted dense solve, branch flows, and optional PV reactive-limit conversion.
+- [x] Cross-check the analytic Jacobian with finite differences and test PV-to-PQ iteration reporting.
+- [x] Implement a safe numeric MATPOWER subset parser and native text/JSON CLI.
+- [x] Return CLI failures as standard-error messages with exit code 2; reject repeated numeric options and cover both paths with tests.
+- [x] Add a self-authored synthetic example, README, provenance notes, Apache-2.0 license, and multi-platform CI.
+- [x] Validate native and wasm-gc on the current locally installed stable MoonBit toolchain; inspect generated interfaces and run both CLI success and failure cases.
+- [x] Create and push the public repository as Zcxssxx/gridflow; verify its initial remote main branch, files, authorship, license, contributors, and CI.
+- [x] Check current October hackathon rules and prepare a local Markdown proposal draft outside this repository.
+- [ ] Push the latest CLI error-handling changes and verify the resulting remote commit and CI run.
+- [ ] Before submitting the entry, verify the participant's remaining October submission count and confirm the form's accepted document format with the organizer if needed.
 
 ## Current constraints
 
-- Do not claim an IEEE/PSTCA reference benchmark: UW warns that several archived inputs are unvalidated or have questionable fields, and case-data licensing is separate from MATPOWER software licensing.
-- No third-party case data or source code is included. External cases need a case-specific license check and an independent reference solution before they can become fixtures.
-- The active GitHub CLI identity was checked after local validation and matched Zcxssxx. Git author settings must be scoped to this repository.
-- Do not read GitHub tokens, other accounts, or global Git author configuration.
+- The October event site states October 31, 2026 as the registration and acceptance deadline. The formal charter's schedule table still says October 24; treat the date discrepancy as requiring official confirmation.
+- No IEEE/PSTCA benchmark results are claimed. No external case data is bundled because the archive/source terms and reference values need case-specific validation.
+- The current test evidence uses self-authored networks, closed-form values, invariants, parser rejection cases, and finite-difference Jacobian checks.
+- No Mooncakes publication requirement was found in the October event site or the reviewed charter sections; no package has been published.
+- The user requested a natural development history. Do not create empty, backdated, misattributed, or mechanically split commits to reach a target count.
+- The active GitHub CLI identity was checked immediately before remote verification and returned `Zcxssxx`. No token, prior login, or global Git author configuration was inspected.

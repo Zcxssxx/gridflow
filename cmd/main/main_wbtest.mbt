@@ -23,3 +23,29 @@ test "CLI rejects missing case paths and unknown options" {
     parse_cli_args(["gridflow", "--case", "case.m", "--wat"]) is Err(_),
   )
 }
+
+///|
+test "CLI returns a readable missing-file error" {
+  let missing_path = "__gridflow_missing_cli_test_file__.m"
+  match execute_cli(["gridflow", "--case", missing_path]) {
+    Err(message) => assert_true(message.contains(missing_path))
+    Ok(_) => fail("a missing case file must return an error")
+  }
+}
+
+///|
+test "CLI rejects repeated numeric options" {
+  assert_true(
+    parse_cli_args([
+      "gridflow", "--case", "case.m", "--max-iterations", "5", "--max-iterations",
+      "8",
+    ])
+    is Err(DuplicateOption("--max-iterations")),
+  )
+  assert_true(
+    parse_cli_args([
+      "gridflow", "--case", "case.m", "--tolerance", "1e-7", "--tolerance", "1e-9",
+    ])
+    is Err(DuplicateOption("--tolerance")),
+  )
+}

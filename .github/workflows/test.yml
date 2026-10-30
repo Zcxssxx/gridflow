@@ -68,6 +68,24 @@ jobs:
           moon run --target native cmd/main -- --case examples/two_bus.m
           moon run --target native cmd/main -- --case examples/two_bus.m --json | jq -e '.converged == true and (.buses | length) == 2'
 
+      - name: Check CLI error exit status
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          error_file=$(mktemp)
+          trap 'rm -f "$error_file"' EXIT
+          set +e
+          stdout=$(moon run --target native cmd/main -- --case __gridflow_missing_ci_case__.m 2>"$error_file")
+          status=$?
+          set -e
+          test "$status" -eq 2
+          test -z "$stdout"
+          grep -F "cannot read case file '__gridflow_missing_ci_case__.m'" "$error_file"
+          if grep -Eq 'PanicError|moonbit_panic' "$error_file"; then
+            echo "CLI error output contains a runtime panic trace" >&2
+            exit 1
+          fi
+
   wasm:
     name: WebAssembly
     runs-on: ubuntu-latest

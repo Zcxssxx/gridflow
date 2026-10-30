@@ -21,6 +21,8 @@ fn parse_cli_args(args : Array[String]) -> Result[CliOptions, CliArgsError] {
   let mut enforce_q_limits = false
   let mut max_iterations = 20
   let mut tolerance_pu = 1.0e-8
+  let mut max_iterations_seen = false
+  let mut tolerance_seen = false
   let mut index = 1
   while index < args.length() {
     let argument = args[index]
@@ -50,6 +52,9 @@ fn parse_cli_args(args : Array[String]) -> Result[CliOptions, CliArgsError] {
         index += 1
       }
       "--max-iterations" => {
+        if max_iterations_seen {
+          return Err(DuplicateOption(argument))
+        }
         if index + 1 >= args.length() {
           return Err(MissingValue(argument))
         }
@@ -65,9 +70,13 @@ fn parse_cli_args(args : Array[String]) -> Result[CliOptions, CliArgsError] {
           }
           Err(error) => return Err(error)
         }
+        max_iterations_seen = true
         index += 2
       }
       "--tolerance" => {
+        if tolerance_seen {
+          return Err(DuplicateOption(argument))
+        }
         if index + 1 >= args.length() {
           return Err(MissingValue(argument))
         }
@@ -83,6 +92,7 @@ fn parse_cli_args(args : Array[String]) -> Result[CliOptions, CliArgsError] {
           }
           Err(error) => return Err(error)
         }
+        tolerance_seen = true
         index += 2
       }
       _ => return Err(UnknownOption(argument))
@@ -178,32 +188,41 @@ fn usage() -> String {
 }
 
 ///|
-fn main raise {
-  let args = @env.args()
+fn execute_cli(args : Array[String]) -> Result[String, String] {
   if args.contains("--help") {
-    println(usage())
-    return
+    return Ok(usage())
   }
   let options = match parse_cli_args(args) {
     Ok(options) => options
-    Err(error) => raise Failure("\{cli_args_error_message(error)}\n\{usage()}")
+    Err(error) => return Err("\{cli_args_error_message(error)}\n\{usage()}")
   }
   let source = @fs.read_file_to_string(options.case_path) catch {
     @fs.IOError::IOError(message) =>
-      raise Failure("cannot read case file '\{options.case_path}': \{message}")
+      return Err("cannot read case file '\{options.case_path}': \{message}")
   }
   let network = match @matpower.parse_case(source) {
     Ok(network) => network
-    Err(error) => raise Failure(parse_error_message(error))
+    Err(error) => return Err(parse_error_message(error))
   }
   let result = match
     @gridflow.solve_power_flow(network, options=options.solve_options) {
     Ok(result) => result
-    Err(error) => raise Failure(solver_error_message(error))
+    Err(error) => return Err(solver_error_message(error))
   }
   if options.json_output {
-    println(json_report(result))
+    Ok(json_report(result))
   } else {
-    println(text_report(result))
+    Ok(text_report(result))
+  }
+}
+
+///|
+fn main {
+  match execute_cli(@env.args()) {
+    Ok(output) => println(output)
+    Err(message) => {
+      eprintln("gridflow: \{message}")
+      @sys.exit(2)
+    }
   }
 }

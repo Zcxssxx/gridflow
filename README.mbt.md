@@ -39,6 +39,9 @@ mpc.branch matrices. Numeric `mpc.gencost` and `mpc.areas` matrices are accepted
 and ignored. The reader never evaluates MATLAB code; unknown statements,
 expressions, and function calls are rejected.
 
+Invalid arguments, unreadable files, invalid case data, and solver failures are
+reported on standard error with exit code 2.
+
 The first version requires at least 13 columns in bus rows, 10 in generator
 rows, and 11 in branch rows. Additional columns are ignored. It does not solve
 generator cost functions or support MATPOWER extensions, cell arrays, or

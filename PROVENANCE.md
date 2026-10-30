@@ -21,9 +21,10 @@ must check the terms attached to any external case they choose to load.
 
 - moonbitlang/core is distributed with the MoonBit toolchain. Its package
   license is Apache-2.0.
-- moonbitlang/x@0.5.6 is used by the native CLI for file reading through
-  moonbitlang/x/fs. It is an external runtime dependency, is not vendored,
-  and is licensed Apache-2.0. The solver library and parser do not depend on it.
+- moonbitlang/x@0.5.6 is used by the CLI for file reading through
+  moonbitlang/x/fs and a clean nonzero process exit through moonbitlang/x/sys.
+  It is an external runtime dependency, is not vendored, and is licensed
+  Apache-2.0. The solver library and MATPOWER parser do not depend on it.
 
 There are no copied third-party code snippets or third-party test datasets in
 the repository. All test networks are written in the project tests.
