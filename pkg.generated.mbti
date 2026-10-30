@@ -1,0 +1,126 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Zcxssxx/gridflow"
+
+// Values
+pub fn solve_power_flow(Network, options? : SolveOptions) -> Result[PowerFlowResult, PowerFlowError]
+
+pub fn validate_network(Network) -> Result[Unit, NetworkValidationError]
+
+// Errors
+
+// Types and methods
+pub(all) struct Branch {
+  from_bus : Int32
+  to_bus : Int32
+  r_pu : Double
+  x_pu : Double
+  b_pu : Double
+  tap_ratio : Double
+  phase_shift_degree : Double
+  in_service : Bool
+}
+pub fn Branch::new(from_bus~ : Int32, to_bus~ : Int32, r_pu~ : Double, x_pu~ : Double, b_pu? : Double, tap_ratio? : Double, phase_shift_degree? : Double, in_service? : Bool) -> Self
+
+pub(all) struct BranchResult {
+  from_bus : Int32
+  to_bus : Int32
+  in_service : Bool
+  p_from_mw : Double
+  q_from_mvar : Double
+  p_to_mw : Double
+  q_to_mvar : Double
+  p_loss_mw : Double
+  q_loss_mvar : Double
+}
+
+pub(all) struct Bus {
+  id : Int32
+  kind : BusKind
+  p_load_mw : Double
+  q_load_mvar : Double
+  shunt_g_mw : Double
+  shunt_b_mvar : Double
+  vm_pu : Double
+  va_degree : Double
+}
+pub fn Bus::new(id~ : Int32, kind~ : BusKind, p_load_mw? : Double, q_load_mvar? : Double, shunt_g_mw? : Double, shunt_b_mvar? : Double, vm_pu? : Double, va_degree? : Double) -> Self
+
+pub(all) enum BusKind {
+  PQ
+  PV
+  Slack
+}
+
+pub(all) struct BusResult {
+  bus_id : Int32
+  voltage_magnitude_pu : Double
+  voltage_angle_degree : Double
+  p_generation_mw : Double
+  q_generation_mvar : Double
+  p_injection_mw : Double
+  q_injection_mvar : Double
+}
+
+pub(all) struct Generator {
+  bus_id : Int32
+  p_mw : Double
+  q_mvar : Double
+  q_min_mvar : Double
+  q_max_mvar : Double
+  v_set_pu : Double
+  in_service : Bool
+}
+pub fn Generator::new(bus_id~ : Int32, p_mw~ : Double, q_mvar? : Double, q_min_mvar? : Double, q_max_mvar? : Double, v_set_pu? : Double, in_service? : Bool) -> Self
+
+pub(all) struct Network {
+  base_mva : Double
+  buses : Array[Bus]
+  generators : Array[Generator]
+  branches : Array[Branch]
+}
+pub fn Network::new(base_mva~ : Double, buses~ : Array[Bus], generators~ : Array[Generator], branches~ : Array[Branch]) -> Self
+
+pub(all) enum NetworkValidationError {
+  EmptyNetwork
+  InvalidBaseMva
+  DuplicateBusId(Int32)
+  InvalidBusData(Int32)
+  MissingSlackBus
+  MultipleSlackBuses
+  UnknownGeneratorBus(Int32)
+  InvalidGeneratorData(Int32)
+  InvalidGeneratorReactiveLimits(Int32)
+  UnknownBranchBus(Int32)
+  BranchLoop(Int32)
+  InvalidBranchImpedance(Int32, Int32)
+  InvalidTapRatio(Int32, Int32)
+  MissingGeneratorAtControlledBus(Int32)
+  IsolatedBus(Int32)
+}
+
+pub(all) enum PowerFlowError {
+  InvalidNetwork(NetworkValidationError)
+  InvalidOptions
+  SingularJacobian(Int32)
+  NonFiniteCalculation(Int32)
+  DidNotConverge(Int32, Double)
+}
+
+pub(all) struct PowerFlowResult {
+  buses : Array[BusResult]
+  branches : Array[BranchResult]
+  iterations : Int32
+  max_mismatch_pu : Double
+}
+
+pub(all) struct SolveOptions {
+  tolerance_pu : Double
+  max_iterations : Int32
+  enforce_q_limits : Bool
+}
+pub fn SolveOptions::default() -> Self
+pub fn SolveOptions::new(tolerance_pu? : Double, max_iterations? : Int32, enforce_q_limits? : Bool) -> Self
+
+// Type aliases
+
+// Traits
