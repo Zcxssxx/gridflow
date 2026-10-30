@@ -86,6 +86,11 @@ jobs:
             exit 1
           fi
 
+      - name: Compare PGLib cases with independent references
+        if: runner.os == 'Linux'
+        shell: bash
+        run: bash scripts/check-pglib-benchmarks.sh
+
   wasm:
     name: WebAssembly
     runs-on: ubuntu-latest

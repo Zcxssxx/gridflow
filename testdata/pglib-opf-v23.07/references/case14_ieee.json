@@ -1,0 +1,258 @@
+{
+  "case": "case14_ieee",
+  "reference_solver": {
+    "repository": "https://github.com/aartinian/powerflow",
+    "revision": "78a7b1a5e4bd4fee35c66b2a2354ae18682e6a7a",
+    "license": "MIT"
+  },
+  "options": {
+    "flat_start": true,
+    "enforce_q_limits": false,
+    "tolerance_pu": 1E-10,
+    "max_iterations": 50
+  },
+  "reference_output_precision": {
+    "voltage_magnitude_decimal_places": 6,
+    "voltage_angle_decimal_places": 4,
+    "branch_flow_decimal_places": 2,
+    "active_loss_decimal_places": 2
+  },
+  "converged": true,
+  "iterations": 5,
+  "max_mismatch_pu": 7.695233339433116E-15,
+  "total_active_losses_mw": 16.67,
+  "buses": [
+    {
+      "bus_id": 1,
+      "vm_pu": 1,
+      "va_degree": 0
+    },
+    {
+      "bus_id": 2,
+      "vm_pu": 1,
+      "va_degree": -6.2455
+    },
+    {
+      "bus_id": 3,
+      "vm_pu": 1,
+      "va_degree": -15.1733
+    },
+    {
+      "bus_id": 4,
+      "vm_pu": 0.968774,
+      "va_degree": -11.9189
+    },
+    {
+      "bus_id": 5,
+      "vm_pu": 0.967207,
+      "va_degree": -10.1572
+    },
+    {
+      "bus_id": 6,
+      "vm_pu": 1,
+      "va_degree": -16.3184
+    },
+    {
+      "bus_id": 7,
+      "vm_pu": 0.989993,
+      "va_degree": -15.3405
+    },
+    {
+      "bus_id": 8,
+      "vm_pu": 1,
+      "va_degree": -15.3405
+    },
+    {
+      "bus_id": 9,
+      "vm_pu": 0.984862,
+      "va_degree": -17.1502
+    },
+    {
+      "bus_id": 10,
+      "vm_pu": 0.979558,
+      "va_degree": -17.3314
+    },
+    {
+      "bus_id": 11,
+      "vm_pu": 0.985927,
+      "va_degree": -16.9753
+    },
+    {
+      "bus_id": 12,
+      "vm_pu": 0.98408,
+      "va_degree": -17.3
+    },
+    {
+      "bus_id": 13,
+      "vm_pu": 0.978901,
+      "va_degree": -17.3933
+    },
+    {
+      "bus_id": 14,
+      "vm_pu": 0.962897,
+      "va_degree": -18.4098
+    }
+  ],
+  "branches": [
+    {
+      "from_bus": 1,
+      "to_bus": 2,
+      "p_from_mw": 169.01,
+      "q_from_mvar": -47.97,
+      "p_to_mw": -163.08,
+      "q_to_mvar": 60.8
+    },
+    {
+      "from_bus": 1,
+      "to_bus": 5,
+      "p_from_mw": 77.15,
+      "q_from_mvar": 0.35,
+      "p_to_mw": -73.93,
+      "q_to_mvar": 8.18
+    },
+    {
+      "from_bus": 2,
+      "to_bus": 3,
+      "p_from_mw": 75.58,
+      "q_from_mvar": -14.01,
+      "p_to_mw": -72.83,
+      "q_to_mvar": 21.22
+    },
+    {
+      "from_bus": 2,
+      "to_bus": 4,
+      "p_from_mw": 55.06,
+      "q_from_mvar": 0.56,
+      "p_to_mw": -53.3,
+      "q_to_mvar": 1.5
+    },
+    {
+      "from_bus": 2,
+      "to_bus": 5,
+      "p_from_mw": 40.23,
+      "q_from_mvar": 5.25,
+      "p_to_mw": -39.28,
+      "q_to_mvar": -5.7
+    },
+    {
+      "from_bus": 3,
+      "to_bus": 4,
+      "p_from_mw": -21.37,
+      "q_from_mvar": 26.9,
+      "p_to_mw": 22.18,
+      "q_to_mvar": -26.06
+    },
+    {
+      "from_bus": 4,
+      "to_bus": 5,
+      "p_from_mw": -60.81,
+      "q_from_mvar": 23.94,
+      "p_to_mw": 61.42,
+      "q_to_mvar": -22.02
+    },
+    {
+      "from_bus": 4,
+      "to_bus": 7,
+      "p_from_mw": 27.99,
+      "q_from_mvar": 1.11,
+      "p_to_mw": -27.99,
+      "q_to_mvar": 0.56
+    },
+    {
+      "from_bus": 4,
+      "to_bus": 9,
+      "p_from_mw": 16.14,
+      "q_from_mvar": 3.42,
+      "p_to_mw": -16.14,
+      "q_to_mvar": -1.9
+    },
+    {
+      "from_bus": 5,
+      "to_bus": 6,
+      "p_from_mw": 44.2,
+      "q_from_mvar": 17.93,
+      "p_to_mw": -44.2,
+      "q_to_mvar": -12.61
+    },
+    {
+      "from_bus": 6,
+      "to_bus": 11,
+      "p_from_mw": 7.39,
+      "q_from_mvar": 3.58,
+      "p_to_mw": -7.33,
+      "q_to_mvar": -3.44
+    },
+    {
+      "from_bus": 6,
+      "to_bus": 12,
+      "p_from_mw": 7.81,
+      "q_from_mvar": 2.53,
+      "p_to_mw": -7.72,
+      "q_to_mvar": -2.36
+    },
+    {
+      "from_bus": 6,
+      "to_bus": 13,
+      "p_from_mw": 17.8,
+      "q_from_mvar": 7.29,
+      "p_to_mw": -17.55,
+      "q_to_mvar": -6.81
+    },
+    {
+      "from_bus": 7,
+      "to_bus": 8,
+      "p_from_mw": 0,
+      "q_from_mvar": -5.62,
+      "p_to_mw": 0,
+      "q_to_mvar": 5.68
+    },
+    {
+      "from_bus": 7,
+      "to_bus": 9,
+      "p_from_mw": 27.99,
+      "q_from_mvar": 5.06,
+      "p_to_mw": -27.99,
+      "q_to_mvar": -4.15
+    },
+    {
+      "from_bus": 9,
+      "to_bus": 10,
+      "p_from_mw": 5.2,
+      "q_from_mvar": 4.23,
+      "p_to_mw": -5.19,
+      "q_to_mvar": -4.19
+    },
+    {
+      "from_bus": 9,
+      "to_bus": 14,
+      "p_from_mw": 9.43,
+      "q_from_mvar": 3.65,
+      "p_to_mw": -9.29,
+      "q_to_mvar": -3.37
+    },
+    {
+      "from_bus": 10,
+      "to_bus": 11,
+      "p_from_mw": -3.81,
+      "q_from_mvar": -1.61,
+      "p_to_mw": 3.83,
+      "q_to_mvar": 1.64
+    },
+    {
+      "from_bus": 12,
+      "to_bus": 13,
+      "p_from_mw": 1.62,
+      "q_from_mvar": 0.76,
+      "p_to_mw": -1.62,
+      "q_to_mvar": -0.75
+    },
+    {
+      "from_bus": 13,
+      "to_bus": 14,
+      "p_from_mw": 5.67,
+      "q_from_mvar": 1.76,
+      "p_to_mw": -5.61,
+      "q_to_mvar": -1.63
+    }
+  ]
+}

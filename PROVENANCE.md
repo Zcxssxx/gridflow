@@ -13,9 +13,30 @@ bus types, branch charging, off-nominal taps, and phase shifts:
 - [MATPOWER runpf reference](https://matpower.org/docs/ref/matpower7.1/lib/runpf.html)
 - [MATPOWER case format](https://matpower.org/documentation/ref-manual/legacy/functions/caseformat.html)
 
-No MATPOWER source code or case data is included. The MATPOWER project states
-that its case files are not automatically covered by its software license; users
-must check the terms attached to any external case they choose to load.
+No code or case data from the MATPOWER repository is included. The MATPOWER
+project states that its case files are not automatically covered by its software
+license; users must check the terms attached to any external case they choose to
+load. The separate PGLib data license for GridFlow's included extracts is
+recorded below.
+
+## Bundled third-party case data
+
+`testdata/pglib-opf-v23.07/` contains data-only extracts from three PGLib-OPF
+v23.07 IEEE-derived typical-operations cases (14, 30, and 118 buses). The source
+files attribute the underlying CDF conversion to Richard D. Christie,
+University of Washington Electrical Engineering, and declare the case data
+under CC BY 4.0. The source URLs, source and extracted-file SHA-256 hashes,
+transformation, and limitations are recorded in that directory's README. Only
+`version`, `baseMVA`, and unchanged numeric `bus`, `gen`, and `branch` matrices
+are retained; no PGLib code or OPF cost model is copied.
+
+The corresponding files under `references/` are numeric outputs from the
+independent MIT-licensed `aartinian/powerflow` C# implementation, pinned to
+commit `78a7b1a5e4bd4fee35c66b2a2354ae18682e6a7a`. Its project README reports
+comparisons against MATPOWER `runpf` for five IEEE benchmark cases. No code from
+that solver is bundled or used at runtime; the reference data preserve the
+runner's published JSON precision. The test-data README describes the solver
+options and comparison tolerances.
 
 ## Runtime and development dependencies
 
@@ -26,8 +47,10 @@ must check the terms attached to any external case they choose to load.
   It is an external runtime dependency, is not vendored, and is licensed
   Apache-2.0. The solver library and MATPOWER parser do not depend on it.
 
-There are no copied third-party code snippets or third-party test datasets in
-the repository. All test networks are written in the project tests.
+There are no copied third-party code snippets in the repository. The synthetic
+test networks and two-bus example are authored for this project; the separately
+licensed PGLib case data and independently generated reference outputs are
+identified above and in their accompanying notice.
 
 ## License
 
