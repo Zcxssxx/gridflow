@@ -1,0 +1,15 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Zcxssxx/gridflow/cmd/main"
+
+// Values
+
+// Errors
+
+// Types and methods
+type CliArgsError
+
+type CliOptions
+
+// Type aliases
+
+// Traits

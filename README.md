@@ -1,0 +1,107 @@
+# GridFlow
+
+GridFlow is a MoonBit library and native CLI for balanced, positive-sequence AC
+power-flow studies. It solves PQ, PV, and slack-bus networks with a polar
+Newton-Raphson method, and reports bus voltages, generator injections, branch
+flows, and losses.
+
+It is intended for learning, research prototypes, and embedding MoonBit
+calculations in native or WebAssembly tools. It is not intended for dispatch,
+protection, real-time control, or safety-critical grid operation.
+
+## Run the example
+
+Install the MoonBit toolchain, then run:
+
+~~~sh
+moon run --target native cmd/main -- --case examples/two_bus.m
+~~~
+
+For machine-readable output:
+
+~~~sh
+moon run --target native cmd/main -- --case examples/two_bus.m --json
+~~~
+
+The example is a synthetic two-bus network authored for this repository. It
+contains no third-party case data.
+
+## CLI
+
+~~~text
+gridflow --case FILE [--json] [--enforce-q-limits]
+         [--max-iterations N] [--tolerance PU]
+~~~
+
+The CLI reads a restricted MATPOWER case M-file subset as data. It accepts a
+function header, version 2, mpc.baseMVA, and numeric mpc.bus, mpc.gen, and
+mpc.branch matrices. Numeric `mpc.gencost` and `mpc.areas` matrices are accepted
+and ignored. The reader never evaluates MATLAB code; unknown statements,
+expressions, and function calls are rejected.
+
+The first version requires at least 13 columns in bus rows, 10 in generator
+rows, and 11 in branch rows. Additional columns are ignored. It does not solve
+generator cost functions or support MATPOWER extensions, cell arrays, or
+general MATLAB syntax.
+
+## Library
+
+The root package exposes Network, Bus, Generator, Branch, SolveOptions, and
+solve_power_flow. Data use MW/MVAr and per-unit branch parameters on the network
+base_mva.
+
+~~~moonbit
+let network = @gridflow.Network::new(
+  base_mva=100.0,
+  buses=[
+    @gridflow.Bus::new(id=1, kind=@gridflow.Slack),
+    @gridflow.Bus::new(id=2, kind=@gridflow.PQ, p_load_mw=100.0),
+  ],
+  generators=[@gridflow.Generator::new(bus_id=1, p_mw=0.0)],
+  branches=[
+    @gridflow.Branch::new(
+      from_bus=1,
+      to_bus=2,
+      r_pu=0.01,
+      x_pu=0.1,
+    ),
+  ],
+)
+match @gridflow.solve_power_flow(network) {
+  Ok(result) => println(result.buses[1].voltage_magnitude_pu.to_string())
+  Err(_) => println("power flow failed")
+}
+~~~
+
+Set enforce_q_limits=true to clamp aggregate generator reactive limits on PV
+buses and convert limited PV buses to PQ. The slack bus remains the angle
+reference and its reactive output is not clamped.
+
+## Validation
+
+~~~sh
+moon fmt --check
+moon check --deny-warn
+moon test --deny-warn
+moon build --target native
+moon build --target wasm-gc
+moon info
+~~~
+
+Tests include a closed-form two-bus solution, bus and topology validation,
+PV-to-PQ reactive-limit enforcement, transformer taps and phase shifts,
+out-of-service lines, and a pivoting linear-system check.
+
+## Scope and data
+
+The solver covers balanced steady-state AC power flow. It does not provide
+optimal power flow, short-circuit analysis, dynamic stability, unbalanced
+distribution models, protection logic, or production safety guarantees.
+
+No IEEE/PSTCA benchmark input is bundled. Those archives include data caveats,
+and MATPOWER case data do not automatically share the MATPOWER source license.
+See PROVENANCE.md before using external case files.
+
+## License
+
+GridFlow is licensed under Apache-2.0. See LICENSE.
