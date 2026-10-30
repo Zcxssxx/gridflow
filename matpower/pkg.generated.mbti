@@ -1,0 +1,26 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Zcxssxx/gridflow/matpower"
+
+import {
+  "Zcxssxx/gridflow",
+}
+
+// Values
+pub fn parse_case(String) -> Result[@gridflow.Network, ParseError]
+
+// Errors
+
+// Types and methods
+pub(all) enum ParseError {
+  UnsupportedSyntax(Int32, String)
+  InvalidNumber(Int32, String)
+  InvalidRow(Int32, String)
+  UnsupportedBusType(Int32, Int32)
+  MissingBaseMva
+  MissingMatrix(String)
+  UnterminatedMatrix(Int32, String)
+}
+
+// Type aliases
+
+// Traits
