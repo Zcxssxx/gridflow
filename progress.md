@@ -18,7 +18,7 @@
 - Current competition site and charter were checked. The site says October 31 is the registration/acceptance deadline; the charter table still says October 24. The supplementary Feishu page is specifically for the August hackathon and was not applied to the October round.
 - Prepared `GridFlow-申报书.md` and `GridFlow-赛规核验.md` in the workspace parent, outside the public repository. The proposal leaves contact details for the participant to fill and does not claim external user interviews or IEEE benchmark validation.
 - The proposal has not been submitted. The October form's remaining attempt count and accepted file format are not visible from the reviewed pages and must be checked before submission.
-- The user's target of more than 10 meaningful commits has not been reached; six authentic commits are present. Continue only when substantive project work justifies new commits.
+- At that checkpoint the user's target of more than 10 meaningful commits had not been reached; six authentic commits were present. Continue only when substantive project work justifies new commits.
 
 ## Follow-up: PGLib reference coverage (2026-10-30)
 
@@ -30,4 +30,14 @@
 - Enabling Q-limits is not part of the reference claim. The 118-bus outputs diverged in an exploratory comparison because the C# implementation supports PQ-to-PV recovery while GridFlow applies aggregate PV-to-PQ conversion without recovery; focused GridFlow unit tests continue to cover its documented mode.
 - Local verification on Moon 0.1.20261028 / moonc 0.10.18: `moon fmt --check`; native `moon check --deny-warn`, `moon test --deny-warn` (22/22), `moon build`; wasm-gc equivalents (22/22); `moon info` and interface diff; `moon package --list`; two-bus text/JSON CLI; missing-file exit 2 without panic; three-case integration script. All passed.
 - The proposal draft in the workspace parent now includes the licensed PGLib cases and independent cross-check, with limits stated explicitly. It remains local and has not been submitted.
-- Remote update for this follow-up has not yet been pushed; identity confirmation and remote CI/file/history verification remain pending.
+- At this follow-up's implementation checkpoint, the remote push and verification were still pending; the later section below records their completion.
+
+## Remote verification and review follow-up (2026-10-30)
+
+- Applied the read-only review findings: both GridFlow and independent-reference maximum mismatches must be non-negative and below the documented `1e-10 pu`; a mutation check confirmed that a reference residual of `1e-8 pu` is rejected. Provenance wording now distinguishes retained PGLib case wrappers/data from solver/tooling implementation code.
+- The current MoonBit CLI rejects `moon version --all`; `moon -V` reports Moon 0.1.20261028, moonc 0.10.18, and moonrun 0.1.20261028. Updated both CI toolchain-recording steps to `moon -V`.
+- Re-ran local format, native and wasm-gc check/test/build, generated-interface diff, and the 14/30/118-bus independent-reference regression. Each test target reported 22/22 passing; all three benchmarks met the residual, voltage, branch-flow, and loss checks.
+- Verified the active GitHub login was `Zcxssxx`, then pushed the three pending commits. Remote default branch is `main`, and its head is `5bc829c0d02dccc13dbeee3cce81535d61407f39`.
+- GitHub Actions run [41003810930](https://github.com/Zcxssxx/gridflow/actions/runs/41003810930) completed successfully on that SHA. Native Ubuntu, macOS, Windows, and WebAssembly checks all succeeded.
+- Queried the remote tree and confirmed the workflow, regression script, fixtures, references, and fixture notice are present. GitHub's license endpoint identifies root `LICENSE` as Apache-2.0. The ten commits preceding this status record are attributed to `Zcxssxx`; the contributor endpoint lists only `Zcxssxx`.
+- `GridFlow-申报书.md` remains a local draft and has not been submitted.
