@@ -1,0 +1,10 @@
+# GridFlow findings
+
+- Public Mooncakes/GitHub screening found adjacent MoonBit circuit-analysis and SPICE/MNA solvers, but no direct balanced AC PQ/PV transmission load-flow package. Mature non-MoonBit competitors include MATPOWER, pandapower, and PowerModels. The project's defensible scope is learning, research prototypes, and MoonBit/Wasm embedding, not production operations.
+- UW Power Systems Test Case Archive pages caveat that IEEE 14 and 30 inputs are not power-flow validated, IEEE 30 impedances may be wrong, and IEEE 118 includes guessed metadata. MATPOWER case data are not automatically covered by the software license. No external benchmark data are bundled.
+- The included two-bus network is synthetic and self-authored. It has a closed-form solution: receiving voltage 0.930274994519425 pu at -5.861282286039 degrees; slack generation 101.444399 MW / 64.443995 MVAr. The executable result has a residual below 1e-14 pu.
+- Three-bus tests cover PV control, transformer tap and phase shift, shunts, and power balance. A white-box finite-difference check covers every analytic polar-Jacobian block for a network containing a phase-shifting transformer.
+- moon version --all on 2026-10-30: moon 0.1.20261028 (e1e1f15 2026-10-28), moonc v0.10.18+6c83a7f62 (2026-10-28), moonrun 0.1.20261028.
+- moonbitlang/x@0.5.6 is used only by the native CLI for file I/O; the solver and MATPOWER parser do not depend on it. The dependency is Apache-2.0 and is not vendored.
+- The official community workflow template uses a cross-platform MoonBit installer/check pattern. GridFlow extends that pattern with strict warnings, formatter checks, interface drift checks, native tests on three OSes, WebAssembly checks, and a machine-validated JSON CLI example.
+- GitHub Docs say commits are attributed by matching the commit email to an address linked to the account; an ID-based GitHub noreply address is the portable private option. Only the active account identity will be checked; no token or prior account information is to be read.

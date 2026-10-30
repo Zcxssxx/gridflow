@@ -1,0 +1,89 @@
+name: MoonBit CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: Native (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install MoonBit (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Install MoonBit (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+          irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
+          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+      - name: Record toolchain
+        run: moon version --all
+
+      - name: Format
+        run: moon fmt --check
+
+      - name: Check
+        run: moon check --deny-warn --target native
+
+      - name: Inspect generated interfaces
+        shell: bash
+        run: |
+          moon info
+          git diff --exit-code -- '**/*.mbti'
+
+      - name: Test
+        run: moon test --deny-warn --target native
+
+      - name: Build
+        run: moon build --target native
+
+      - name: Run example CLI
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          moon run --target native cmd/main -- --case examples/two_bus.m
+          moon run --target native cmd/main -- --case examples/two_bus.m --json | jq -e '.converged == true and (.buses | length) == 2'
+
+  wasm:
+    name: WebAssembly
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install MoonBit
+        shell: bash
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Record toolchain
+        run: moon version --all
+
+      - name: Check, test, and build
+        run: |
+          moon check --deny-warn --target wasm-gc
+          moon test --deny-warn --target wasm-gc
+          moon build --target wasm-gc
