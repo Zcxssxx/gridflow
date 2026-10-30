@@ -10,7 +10,8 @@
 - [x] Validate native and wasm-gc on the current locally installed stable MoonBit toolchain; inspect generated interfaces and run both CLI success and failure cases.
 - [x] Create and push the public repository as Zcxssxx/gridflow; verify its initial remote main branch, files, authorship, license, contributors, and CI.
 - [x] Check current October hackathon rules and prepare a local Markdown proposal draft outside this repository.
-- [ ] Push the latest CLI error-handling changes and verify the resulting remote commit and CI run.
+- [x] Push the CLI error-handling changes and verify the resulting remote commit and CI run.
+- [ ] Continue toward the user's target of more than 10 meaningful commits only through independently useful work; do not add commits solely to meet the count.
 - [ ] Before submitting the entry, verify the participant's remaining October submission count and confirm the form's accepted document format with the organizer if needed.
 
 ## Current constraints

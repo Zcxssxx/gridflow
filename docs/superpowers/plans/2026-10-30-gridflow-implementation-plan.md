@@ -1,6 +1,6 @@
 # GridFlow Implementation Plan
 
-> Executed in the isolated gridflow/ repository. Local implementation and verification are complete. GitHub identity was checked only after the local gates; remote creation/push and remote verification are next.
+> Executed in the isolated gridflow/ repository. Core implementation, local verification, GitHub push, and remote CI verification are complete. Entry submission checks remain open.
 
 **Goal:** Build a reviewable MoonBit library and CLI for balanced AC transmission power flow with explicit diagnostics and reproducible test evidence.
 
@@ -26,24 +26,33 @@
 3. Safe numeric MATPOWER subset parser, parser rejection tests, native text/JSON CLI, and explicit file-read diagnostics.
 4. Synthetic two-bus example, user-facing docs, provenance, Apache-2.0 license, and GitHub Actions workflow.
 5. Regression validation for analytic Jacobian and PV/PQ iteration counts.
+6. CLI errors are returned on standard error with exit code 2 instead of raising an uncaught runtime panic; repeated numeric options are rejected.
 
 ## Local verification
 
 - moon version --all
 - moon fmt --check
 - moon check --deny-warn --target native
-- moon test --deny-warn --target native (20 passed)
+- moon test --deny-warn --target native (22 passed)
 - moon build --target native
 - moon check --deny-warn --target wasm-gc
-- moon test --deny-warn --target wasm-gc (20 passed)
+- moon test --deny-warn --target wasm-gc (22 passed)
 - moon build --target wasm-gc
 - moon info and SHA-256 comparison of all three generated .mbti files
 - Text and JSON CLI example runs; JSON parsed and asserted locally
-- Missing-file CLI diagnostic and nonzero exit
+- Missing-file CLI diagnostic: exit code 2, empty stdout, path-specific stderr, no panic trace
 - moon package --list (includes root README and LICENSE)
+
+## Remote verification
+
+- Public repository: `https://github.com/Zcxssxx/gridflow`; default branch `main`.
+- At final code verification, remote and local `main` matched SHA `d1a7d8ceeee632b2fdf989647d0cf3653e58be94`.
+- The six commits then present were attributed to `Zcxssxx`; the contributor list contained only `Zcxssxx`.
+- License API reported Apache-2.0.
+- CI run `40999609952` succeeded for native Linux, macOS, Windows, and wasm-gc; the Linux job also checked CLI error status/channel.
 
 ## Remaining delivery work
 
-- Create truthful local Git commits under explicit repository-local Zcxssxx identity settings.
-- Recheck current hackathon rules, prepare any required submission document, and avoid claiming a public benchmark without licensed, independently verified data.
-- Create/push the GitHub repository, then verify its default branch, files, history, contributors, and live Actions result.
+- Before any application submission, verify remaining entry attempts and required file format. The official site says October 31, while the formal charter schedule table says October 24; confirm the final deadline/time.
+- The requested target of more than 10 meaningful commits is not yet met. Continue only with justified maintenance/features; never add mechanical commits.
+- Do not claim IEEE/PSTCA benchmark results without licensed, independently verified data.
