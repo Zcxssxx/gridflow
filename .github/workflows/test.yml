@@ -38,7 +38,7 @@ jobs:
           "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
 
       - name: Record toolchain
-        run: moon version --all
+        run: moon -V
 
       - name: Update MoonBit registry
         run: moon update
@@ -106,7 +106,7 @@ jobs:
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
 
       - name: Record toolchain
-        run: moon version --all
+        run: moon -V
 
       - name: Update MoonBit registry
         run: moon update

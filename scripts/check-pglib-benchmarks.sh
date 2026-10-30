@@ -61,7 +61,10 @@ check_case() {
           ]) as $branch_checks
           | $actual.converged == true
           and $expected.converged == true
-          and $actual.max_mismatch_pu < 1e-8
+          and $actual.max_mismatch_pu >= 0
+          and $actual.max_mismatch_pu < 1e-10
+          and $expected.max_mismatch_pu >= 0
+          and $expected.max_mismatch_pu < 1e-10
           and all($actual.buses[]; .vm_pu > 0)
           and all($bus_checks[]; .bus_id_matches and .vm_matches and .va_matches)
           and all($branch_checks[]; .endpoints_match and .p_from_matches and .q_from_matches and .p_to_matches and .q_to_matches)
@@ -69,7 +72,7 @@ check_case() {
         end
     ' > /dev/null
 
-  printf '%s: converged; %s buses, %s branches; reference voltages, P/Q flows, and losses match\n' \
+  printf '%s: converged below 1e-10 pu residual; %s buses, %s branches; reference voltages, P/Q flows, and losses match\n' \
     "$name" "$expected_buses" "$expected_branches"
 }
 

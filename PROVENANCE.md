@@ -28,7 +28,8 @@ University of Washington Electrical Engineering, and declare the case data
 under CC BY 4.0. The source URLs, source and extracted-file SHA-256 hashes,
 transformation, and limitations are recorded in that directory's README. Only
 `version`, `baseMVA`, and unchanged numeric `bus`, `gen`, and `branch` matrices
-are retained; no PGLib code or OPF cost model is copied.
+are retained; no PGLib solver/tooling implementation code or OPF cost model
+is copied.
 
 The corresponding files under `references/` are numeric outputs from the
 independent MIT-licensed `aartinian/powerflow` C# implementation, pinned to
@@ -47,10 +48,13 @@ options and comparison tolerances.
   It is an external runtime dependency, is not vendored, and is licensed
   Apache-2.0. The solver library and MATPOWER parser do not depend on it.
 
-There are no copied third-party code snippets in the repository. The synthetic
-test networks and two-bus example are authored for this project; the separately
-licensed PGLib case data and independently generated reference outputs are
-identified above and in their accompanying notice.
+No third-party solver implementation code is bundled in the repository. The
+PGLib-derived `.m` fixtures retain the case-file wrapper and numeric matrix
+assignments needed to identify and parse the licensed data extracts; their
+upstream source, retained fields, transformation, and license are documented
+above and in their accompanying notice. The synthetic test networks and
+two-bus example are authored for this project, and the independently generated
+reference outputs are identified above and in their accompanying notice.
 
 ## License
 
